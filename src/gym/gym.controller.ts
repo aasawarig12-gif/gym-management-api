@@ -1,3 +1,4 @@
+import { CreateGymDto } from './dto/create-gym.dto';
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { GymService } from './gym.service';
 
@@ -19,10 +20,10 @@ getGymById(@Param('id') id: string) {
   };
 }
 
-  @Post()
-  addGym(@Body() gym: any) {
-    console.log('Received Gym:', gym);
+ @Post()
+addGym(@Body() gym: CreateGymDto) {
+  console.log('Received Gym:', gym);
 
-    return this.gymService.addGym(gym);
-  }
+  return this.gymService.addGym(gym);
+}
 }
