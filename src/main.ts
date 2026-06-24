@@ -17,10 +17,23 @@ async function bootstrap() {
 
   // Swagger Configuration
   const config = new DocumentBuilder()
-    .setTitle('Gym Management API')
-    .setDescription('Gym CRUD APIs')
-    .setVersion('1.0')
-    .build();
+  .setTitle('Gym Management API')
+  .setDescription('Gym CRUD APIs')
+  .setVersion('1.0')
+
+  .addBearerAuth(
+    {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      description: 'Enter JWT Token',
+      in: 'header',
+    },
+    'JWT-auth',
+  )
+
+  .build();
 
   const document = SwaggerModule.createDocument(
     app,
