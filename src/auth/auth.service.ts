@@ -37,28 +37,35 @@ export class AuthService {
   }
 
   async login(loginDto: any) {
-    const { email, password } = loginDto;
+  const { email, password } = loginDto;
 
-    const user = await this.usersService.findByEmail(email);
+  console.log('EMAIL:', email);
+  console.log('PASSWORD ENTERED:', password);
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+  const user = await this.usersService.findByEmail(email);
 
-    const isMatch = await bcrypt.compare(password, user.password);
+  console.log('USER FOUND:', user);
 
-    if (!isMatch) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    const payload = {
-      sub: user._id?.toString() || user.id, // ✅ safe fix for MongoDB
-      email: user.email,
-      role: user.role,
-    };
-
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  if (!user) {
+    throw new UnauthorizedException('Invalid credentials');
   }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  console.log('PASSWORD MATCH:', isMatch);
+
+  if (!isMatch) {
+    throw new UnauthorizedException('Invalid credentials');
+  }
+
+  const payload = {
+    sub: user._id.toString(),
+    email: user.email,
+    role: user.role,
+  };
+
+  return {
+    access_token: this.jwtService.sign(payload),
+  };
+}
 }
