@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
+import mongoose, { Document } from 'mongoose';
 export type GymDocument = Gym & Document;
 
 @Schema({ timestamps: true })
@@ -16,6 +15,12 @@ export class Gym {
 
   @Prop()
   rating: number;
+  @Prop({
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'User',
+  required: true,
+})
+owner: string;
 }
 
 export const GymSchema = SchemaFactory.createForClass(Gym);

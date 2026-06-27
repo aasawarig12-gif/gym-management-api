@@ -50,6 +50,7 @@ export class GymService {
 
     const gyms = await this.gymModel
       .find(filter)
+     .populate('owner', '-password')
       .sort(sort)
       .skip(skip)
       .limit(limit);
@@ -71,7 +72,9 @@ export class GymService {
       throw new BadRequestException('Invalid Gym ID');
     }
 
-    const gym = await this.gymModel.findById(id);
+    const gym = await this.gymModel
+      .findById(id)
+      .populate('owner');
 
     if (!gym) {
       throw new NotFoundException('Gym not found');

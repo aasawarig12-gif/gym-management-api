@@ -8,6 +8,7 @@ import { GymModule } from './gym/gym.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { GymGateway } from './gateway/gym.gateway';
+import { MembershipsModule } from './memberships/memberships.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { GymGateway } from './gateway/gym.gateway';
     GymModule,
     AuthModule,
     UsersModule,
+    MembershipsModule,
   ],
 
   controllers: [AppController],
