@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Put,
+  Patch,
   Delete,
   Param,
   Body,
@@ -53,6 +54,30 @@ export class GymController {
   updateGym(@Param('id') id: string, @Body() dto: UpdateGymDto) {
     return this.gymService.update(id, dto);
   }
+
+// UPDATE MULTIPLE GYMS
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth('JWT-auth')
+@Roles('admin')
+@Patch('update-many')
+updateMany(
+  @Body('location') location: string,
+  @Body('newLocation') newLocation: string,
+) {
+  return this.gymService.updateMany(location, newLocation);
+}
+
+
+// DELETE MULTIPLE GYMS
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth('JWT-auth')
+@Roles('admin')
+@Delete('delete-many')
+deleteMany(
+  @Body('location') location: string,
+) {
+  return this.gymService.deleteMany(location);
+}
 
   // DELETE GYM (ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
