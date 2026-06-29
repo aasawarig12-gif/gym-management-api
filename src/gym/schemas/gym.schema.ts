@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+
 export type GymDocument = Gym & Document;
 
 @Schema({ timestamps: true })
 export class Gym {
+
   @Prop({ required: true })
   name: string;
 
@@ -15,17 +17,21 @@ export class Gym {
 
   @Prop()
   rating: number;
+
+  // Reference to User
   @Prop({
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'User',
-  required: true,
-})
-owner: string;
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  })
+  owner: string;
+
 }
 
 export const GymSchema = SchemaFactory.createForClass(Gym);
 
-// INDEXING (IMPORTANT FOR PERFORMANCE)
+
+// INDEXING
 GymSchema.index({ location: 1 });
 GymSchema.index({ name: 1 });
 GymSchema.index({ createdAt: -1 });
